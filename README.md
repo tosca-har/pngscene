@@ -1,4 +1,4 @@
-# Communicating Material Culture Diversity by Creating 3D Online or Virtual Reality Scenes or Games with Three.js (Part 1)
+# Communicating Material Culture Diversity by Creating 3D Online or Virtual Reality Scenes or Games with Three.js (Part 1) (DRAFT)
 
 ## Kristine Hardy & Mathieu Leclerc
 
@@ -9,14 +9,13 @@ The use of interactive 3D models in websites enables examples of archaeological 
 There are several different ways fro creaters to make websites that include models, including game engines such as Unity and Unreal Engine. However websites can also be made relatively easily using the Three.js Javascript library. This guide provides an example of making such a website.
 
 ## Contents
--  [Lesson Goals](#lesson-goals)
+- [Lesson Goals](#lesson-goals)
 - [Software Requirements and Installation](#software-requirements-and-installation)
 - [Creating the Basic Web Page](#creating-the-basic-web-page)
 - [Adding the Information Panels and Map](#adding-the-information-panels-and-map)
 - [Adding the Jar Models](#adding-the-jar-models)
-- [Giving the Jars Colours](#giving-the-jars-colours)
 - [Adding Camera Controls to Move Around](#adding-camera-controls-to-move-around)
-- [Adding Controls to Select a Jar](#adding-controls-to-select-a-jar)
+- [Adding Jar Selection](#adding-jar-selection)
 - [Adding the Option to View in VR](#adding-the-option-to-view-in-vr)
 - [Adding Jar Selection to VR](#adding-jar-selection-to-vr)
 - [Adding Additional Jars](#adding-additional-jars)
@@ -333,38 +332,499 @@ const parameters = {
 	scene.add( sphere1, sphere2, sphere3, sphere4, sphere5, sphere6, sphere7, sphere8, sphere9 );
 
 ```
-
+Save and reload in the browser.
 
 ## Adding the Information Panels and Map
-Now we will add some planes.
+Now we will add some planes. We want the information panels to face the viewer, and the default planes do this. However, we want a plane for the map for the jars to sit on, so this plane has to be rotated 90 degrees (- Math.PI /2) around the x axis.
+
+We will give the planes image 'textures'. Within the myscene folder, download the 'textures' folder from XXX and place it in the myscene folder. These textures are jpeg and png files and they all have pixels dimensions of 2<sup>n</sup> by 2<sup>n</sup>, eg 4096 × 2048. This helps with efficient rendering. Large image files will take longer to load and may not load at all. The use of images with text (created and exported from any graphics program such as Afinity Designer or Powerpoint) is one way to show text. Here we will make all the information panels for all the jars but hide them until the relevant jar is selected by the user. We will have a variable 'selectedPlane' to track which panel is showing and at the start an instruction panel will be selected.
+Textures need to be loaded by a 'TextureLoader'.
+
 After:
 ```
-    let camera, scene, renderer;
+    let psize = 1.0; // panel dimensions
 ```
 Add:
 ```
-    let gallery, adzeraG, aibomG, mailuG, dimiriG, louisadeG, yabobG;			
+    let gallery, adzeraG, aibomG, mailuG, dimiriG, louisadeG, yabobG;
+	let selectedPlane;			
 ```
 and within the init function, after:
 ```
-tex
+camera.position.set( 0, 1.6, 3 );
 ```
+add:
+```
+const textureLoader = new THREE.TextureLoader()
+
+const introTexture = textureLoader.load( 'textures/Intro.jpg' );
+const refTexture = textureLoader.load( 'textures/sources.jpg' );			
+const keyTexture = textureLoader.load( 'textures/key.jpg' );
+const adzeraTexture = textureLoader.load( 'textures/Adzera.jpg' );
+const aibomTexture = textureLoader.load( 'textures/Aibom.jpg' );
+const mailuTexture = textureLoader.load( 'textures/Mailu.jpg' );
+const dimiriTexture = textureLoader.load( 'textures/Dimiri.jpg' );
+const louisadeTexture = textureLoader.load( 'textures/Louisade.jpg' );
+const yabobTexture = textureLoader.load( 'textures/Yabob.jpg' );
+
+gallery = new THREE.Mesh( new THREE.PlaneGeometry( psize, psize  ), new THREE.MeshBasicMaterial({ map: introTexture }));
+gallery.position.set( 0, gheight, -.75); 
+selectedPlane = gallery;
+const gallery2 = new THREE.Mesh(new THREE.PlaneGeometry( psize, psize ), new THREE.MeshBasicMaterial({ map: keyTexture }));
+gallery2.position.set( 1.25, gheight, -.75); 
+const gallery3 = new THREE.Mesh(new THREE.PlaneGeometry(psize, psize  ), new THREE.MeshBasicMaterial({ map: refTexture }));
+gallery3.position.set( -1.25, gheight, -.75); 
+
+scene.add( gallery, gallery2, gallery3);
+
+adzeraG = new THREE.Mesh( new THREE.PlaneGeometry( psize, psize  ), new THREE.MeshBasicMaterial({ map: adzeraTexture }));
+adzeraG.position.set( 0, gheight, -.75); 
+scene.add( adzeraG);
+adzeraG.visible = false;
+
+aibomG = new THREE.Mesh( new THREE.PlaneGeometry( psize, psize  ), new THREE.MeshBasicMaterial({ map: aibomTexture }));
+aibomG.position.set( 0, gheight, -.75); 
+scene.add( aibomG);
+aibomG.visible = false;
+
+mailuG = new THREE.Mesh( new THREE.PlaneGeometry( psize, psize  ), new THREE.MeshBasicMaterial({ map: mailuTexture }));
+mailuG.position.set( 0, gheight, -.75); 
+scene.add( mailuG);
+mailuG.visible = false;
+
+dimiriG = new THREE.Mesh( new THREE.PlaneGeometry( psize, psize  ), new THREE.MeshBasicMaterial({ map: dimiriTexture }));
+dimiriG.position.set( 0, gheight, -.75); 
+scene.add(dimiriG);
+dimiriG.visible = false;
+
+louisadeG = new THREE.Mesh( new THREE.PlaneGeometry( psize, psize  ), new THREE.MeshBasicMaterial({ map: louisadeTexture }));
+louisadeG.position.set( 0, gheight, -.75); 
+scene.add( louisadeG);
+louisadeG.visible = false;
+
+yabobG = new THREE.Mesh( new THREE.PlaneGeometry( psize, psize ), new THREE.MeshBasicMaterial({ map: yabobTexture }));
+yabobG.position.set( 0, gheight, -.75); 
+scene.add(yabobG);
+yabobG.visible = false;
+
+//the Map
+const mapGeometry = new THREE.PlaneGeometry( 3.0 * ratio, 1.5 * ratio );
+const mapTexture = textureLoader.load('textures/png.png'); //from google maps
+mapTexture.generateMipmaps = true //saves gpu if false
+const theMap = new THREE.Mesh( mapGeometry, new THREE.MeshBasicMaterial({ map: mapTexture }));
+theMap.rotation.x = - Math.PI / 2;
+theMap.position.set( 0, desk, 0); //desk
+scene.add( theMap);
+
+```
+Save and reload. If the panels are black, the images are probably in the wrong place. 
 
 ## Adding the Jar Models
-text
-## Giving the Jars Colours
-text
+
+Three.js can load many different types of models. However, the size is very important and large models will not load. Models are made from meshes, and the less nodes (points) or faces in the mesh the smaller the model size. Reducing the nodes or faces in a model, or retopology can be done in programs such as Blender. In Blender this is relatively easy (if the model is imported as a STL), if the model does not have an image texture. These models were primarily designed in Blender and reduced to under 700KB. They were exported as draco compressed glTF (GL Transmission Format) files.
+
+Draco-compressed GTLF files are one of the most memory efficient formats to use with three.js. However, they require the importation of additional loaders. Download the 'models' folder from XXX and put it in the myscene folder.
+
+The jars will be added to a group (called 'jars') and the group will be added to the scene. This will allow us to specify later, that objects belonging to the jars group can be selected. Each jar will get a userdata property that will hold the information panel that is associated with it, so that when it is selected that panel can be shown. Note that the introduction of the 'piecescale' variable is not strictly necessary as it is set to the same as the ratio, but it can be changed later to be smaller or larger to alter the relative size of the jars to the map.
+
+After
+```
+import * as THREE from 'three';
+```
+add
+```
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
+```
+After
+```
+let selectedPlane;
+```
+add
+```
+	const loader = new GLTFLoader();
+	const dracoLoader = new DRACOLoader();
+	dracoLoader.setDecoderPath( 'https://unpkg.com/three@0.160.0/examples/jsm/libs/draco/' );
+	loader.setDRACOLoader( dracoLoader );
+
+	let jars;
+	let adzeraM, aibomM, mailuM, louisadeM, dimiriM, yabobM;
+```
+Within the init function after:
+```
+	scene.add( sphere1, sphere2, sphere3, sphere4, sphere5, sphere6, sphere7, sphere8, sphere9 );
+```
+add:
+```
+	jars = new THREE.Group();
+	scene.add( jars );
+	let piecescale = ratio;
+
+	function onLoadAdzera( gltf ) {
+		const model = gltf.scene;					
+		adzeraM = model.children[0];
+		adzeraM.material = new THREE.MeshStandardMaterial();
+		adzeraM.position.set( 0.61 * ratio, desk + 0.01, 0.15 * ratio);
+		adzeraM.scale.set( piecescale, piecescale, piecescale);
+		adzeraM.material.color.set(parameters.coilBeatenColor);
+		adzeraM.userData.planes = adzeraG;
+		jars.add( adzeraM);
+	}
+	loader.load( 'models/gltf/adzera.glb', onLoadAdzera, undefined, function ( error ) { console.error( error );} );
+				
+	function onLoadAibom( gltf ) {
+		const model = gltf.scene;					
+		aibomM = model.children[0];
+		aibomM.material = new THREE.MeshStandardMaterial();
+		aibomM.position.set( 0.36* ratio, desk + 0.01,-0.01* ratio);
+		aibomM.scale.set( piecescale, piecescale, piecescale);
+		aibomM.material.color.set(parameters.materialColor);
+		aibomM.userData.planes = aibomG;
+		jars.add( aibomM);
+	}
+	loader.load( 'models/gltf/aibom.glb', onLoadAibom, undefined, function ( error ) {console.error( error );} );	
+
+	function onLoadMailu( gltf ) {
+		const model = gltf.scene;					
+		mailuM = model.children[0];
+		mailuM.material = new THREE.MeshStandardMaterial();
+		mailuM.position.set(0.84* ratio, desk + 0.01, 0.48* ratio);
+		mailuM.scale.set( piecescale, piecescale, piecescale);
+		mailuM.material.color.set(parameters.nabColor);
+		mailuM.userData.planes = mailuG;
+		jars.add( mailuM);
+	}
+	loader.load( 'models/gltf/mailu.glb', onLoadMailu, undefined, function ( error ) { console.error( error );} );
+
+	function onLoadLouisade( gltf ) {
+		const model = gltf.scene;					
+		louisadeM = model.children[0];
+		louisadeM.material = new THREE.MeshStandardMaterial();
+		louisadeM.position.set( 0.99* ratio, desk + 0.01, 0.59* ratio );
+		louisadeM.scale.set( piecescale, piecescale, piecescale);
+		louisadeM.material.color.set(parameters.ringTopColor);
+		louisadeM.userData.planes = louisadeG;
+		jars.add( louisadeM);
+	}
+	loader.load( 'models/gltf/louisade.glb', onLoadLouisade, undefined, function ( error ) {console.error( error );} );
+
+	function onLoadDimiri( gltf ) {
+		const model = gltf.scene;					
+		dimiriM = model.children[0];
+		dimiriM.material = new THREE.MeshStandardMaterial();
+		dimiriM.position.set( 0.43* ratio, desk + 0.01, 0* ratio);
+		dimiriM.scale.set( piecescale, piecescale, piecescale);
+		dimiriM.material.color.set(parameters.coilColor);
+		dimiriM.userData.planes = dimiriG;
+		jars.add( dimiriM);
+	}
+	loader.load( 'models/gltf/dimiri.glb', onLoadDimiri, undefined, function ( error ) { console.error( error );} );
+
+	function onLoadYabob( gltf ) {
+		const model = gltf.scene;					
+		yabobM = model.children[0];
+		yabobM.material = new THREE.MeshStandardMaterial();
+		yabobM.position.set( 0.572* ratio, desk + 0.01, 0.0396* ratio);
+		yabobM.scale.set( piecescale, piecescale, piecescale);
+		yabobM.material.color.set(parameters.paddleColor);
+		yabobM.userData.planes = yabobG;
+		jars.add( yabobM);
+		}
+		loader.load( 'models/gltf/yabob.glb', onLoadYabob, undefined, function ( error ) {console.error( error );} );
+```
+Save and reload and you should see 5 models. Number 6 is out of camera view.
+Note that if you change 'let piecescale = ratio;' to 'let piecescale = ratio*2;' the vessels become bigger, but some will overlap. 
+
 ## Adding Camera Controls to Move Around
-text
-## Adding Controls to Select a Jar
-text
+We can add mouse controls to allow us to move around the scene. There are different types of controls, we will use 'orbit' controls that allow the user to rotate around the scene, zoom in and out, and if pressing shift, pan up and down or sideways. Alternatives are Arcball or FirstPerson controls, and you can see examples of these on the Three.js site. We need to import any controls. 
+
+After
+```
+import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
+```
+add
+```
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+```
+Change
+```
+	let camera, scene, renderer;
+```
+
+to
+```
+	let camera, scene, renderer, controls;
+```
+
+In the init, after:
+```
+	container.appendChild( renderer.domElement );
+```
+
+add
+```
+	controls = new OrbitControls( camera, renderer.domElement);
+	controls.target.set( 0, 1.6, 0 );
+	controls.update();
+```
+If you save and reload you should be able to move around and zoom in and out.
+
+## Adding Jar Selection
+Next we want to add an event listener, to be able to select a jar and change the information panel.
+
+After;
+```
+	let camera, scene, renderer, controls;
+```
+add
+```
+	let raycasterM, pointer, selectedTorus; // for mouse controls
+
+```
+
+Within the init function definition
+
+after;
+```
+	controls.update();
+```
+add
+```
+	raycasterM = new THREE.Raycaster(); 
+    pointer = new THREE.Vector2(); 
+	selectedTorus = new THREE.Mesh( new THREE.TorusGeometry( 0.015, 0.007, 20, 20  ), new THREE.MeshStandardMaterial({color: 0x006400})); 
+
+	window.addEventListener( 'click', onClick );
+```
+Then we have to tell the listener what do do if there is a click in the window. We want to: make sure it does not use the orbit controls; take the click position and send a ray to the click position (from the camera) and see if any jars are there. If it finds any jars, it will unhighlight the last jar selected and hide that panel, it will then highlight (by making red emissive) the chosen jar, and make visible the panel that is linked to it in the userData.
+After the resize listener,
+```
+	function onWindowResize() {
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+		renderer.setSize( window.innerWidth, window.innerHeight );
+	}
+```
+add:
+```
+	function onClick( event ) {
+		event.preventDefault(); //stops the orbiting
+		pointer.x = event.clientX / window.innerWidth * 2 - 1
+		pointer.y = - (event.clientY / window.innerHeight) * 2 + 1
+		raycasterM.setFromCamera( pointer, camera );
+		const intersects = raycasterM.intersectObjects( jars.children);
+				
+		if(intersects.length > 0){
+			selectedTorus.material.emissive.r = 0;
+			const found = intersects[ 0 ].object;
+			selectedTorus = found;
+			found.material.emissive.r = 1;
+			selectedPlane.visible = false;
+			selectedPlane = found.userData.planes;
+			selectedPlane.visible = true;
+		}
+	}	
+```
+
 ## Adding the Option to View in VR
-It is more difficult if you want to test controller actions on a VR unit such as a Quest. There is an emulator for chrome (https://chrome.google.com/webstore/detail/immersive-web-emulator/cgffilbpcibhmcfbgggfhfolhkfbhmik)- but it only works to a limited extent. I use my Github page, after testing the page on my computer. As Github can take some time to rebuild/update, I recommend changing the title text, so that you know that you are looking at the updated code. Github may limit the number of updates you can do in an hour. 
+The reason why the panels are positioned as they are, is that this site is designed to be viewed in VR. WebXR is an application programming interface (API) that translates between the web and hardware used for VR (or AR). Viewing the model in VR allows for easier inspection of the pots, especially if, as implemented in the next part of this series, the pots can be picked up and moved. 
+
+Testing the site on a VR unit such as the Quest is more difficult. There is an emulator for chrome (https://chrome.google.com/webstore/detail/immersive-web-emulator/cgffilbpcibhmcfbgggfhfolhkfbhmik)- but it only works to a limited extent. One solution is to use a Github page. As Github can take some time to rebuild/update, you can change the title text, so that you know that you are looking at the updated code. Github may limit the number of updates you can do in an hour. Follow the instructions for uploading the code to a Github page and the note the resulting address where a browser will be able to access the page. Remember to upload the models, textures, and style file as well.
+
+The units in Three.js are metres and so the map will take up 3 by 1.5 m of space. If you want to use a much bigger map, you would have to consider making the map moveable, or implementing a 'teleport' type of movement. Note example three.js code for teleportation is available.
+
+When WebXR is added, a button will be created at the buttom of the website that will enable VR users to enter the immersive version. We will also add models for the controllers.
+
+After
+```
+	import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+```
+add
+```
+	import { VRButton } from 'three/addons/webxr/VRButton.js';
+	import { XRControllerModelFactory } from 'three/addons/webxr/XRControllerModelFactory.js';
+			
+```
+After
+```
+	let camera, scene, renderer, controls;
+```
+add
+```
+	let controller1, controller2, controllerGrip1, controllerGrip2;
+```
+In init, REPLACE
+```
+	container.appendChild( renderer.domElement );
+```
+with
+```
+	renderer.xr.enabled = true;
+	container.appendChild( renderer.domElement );
+	document.body.appendChild( VRButton.createButton( renderer ) );
+```
+In the init function, after
+```
+	controls.update();
+```
+
+add
+```
+	controller1 = renderer.xr.getController( 0 );
+	scene.add( controller1 );
+	controller2 = renderer.xr.getController( 1 );
+	scene.add( controller2 );
+	const controllerModelFactory = new XRControllerModelFactory();
+
+	controllerGrip1 = renderer.xr.getControllerGrip( 0 );
+	controllerGrip1.add( controllerModelFactory.createControllerModel( controllerGrip1 ) );
+	scene.add( controllerGrip1 );
+
+	controllerGrip2 = renderer.xr.getControllerGrip( 1 );
+	controllerGrip2.add( controllerModelFactory.createControllerModel( controllerGrip2 ) );
+	scene.add( controllerGrip2 );
+```
+Save and test on a computer, and in VR if possible.
+
 ## Adding Jar Selection to VR
-text
+
+The controllers can be used to select a jar and change the information panel. Event listeners will be added for the controller trigger being pressed down (EventStart) and then released (EventEnd). Additionally, when the view is being rendered, functions will be added to the render function, to check if the controllers are pointed at any jar, so the user knows what jar is being targetted and that it is selectable.
+
+after
+```
+	let raycasterM, pointer, selectedTorus;
+```
+add
+```
+	let raycaster; // for VR controls
+	const intersected = [];
+	const tempMatrix = new THREE.Matrix4(); //for VR controllers
+```
+
+In the init function REPLACE
+```
+	controller1 = renderer.xr.getController( 0 );
+	scene.add( controller1 );
+	controller2 = renderer.xr.getController( 1 );
+	scene.add( controller2 );
+```
+
+with
+```
+	controller1 = renderer.xr.getController( 0 );
+	controller1.addEventListener( 'selectstart', onSelectStart );
+	controller1.addEventListener( 'selectend', onSelectEnd );
+	scene.add( controller1 );
+
+	controller2 = renderer.xr.getController( 1 );
+	controller2.addEventListener( 'selectstart', onSelectStart );
+	controller2.addEventListener( 'selectend', onSelectEnd );
+	scene.add( controller2 );
+```
+then after
+```
+		scene.add( controllerGrip2 );
+```
+
+add
+```
+		const geometry = new THREE.BufferGeometry().setFromPoints( [ new THREE.Vector3( 0, 0, 0 ), new THREE.Vector3( 0, 0, - 1 ) ] );
+		const line = new THREE.Line( geometry );
+		line.name = 'line';
+		line.scale.z = 5;
+
+		controller1.add( line.clone() );
+		controller2.add( line.clone() );
+
+		raycaster = new THREE.Raycaster(); //for VR
+```
+after the onWindowResize, ie
+```
+			function onWindowResize() {
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+				renderer.setSize( window.innerWidth, window.innerHeight );
+			}
+```
+add
+```
+
+			function onSelectStart( event ) {
+				const controller = event.target;
+				const intersections = getIntersections( controller );
+				if ( intersections.length > 0 ) {
+					const intersection = intersections[ 0 ];
+					const object = intersection.object;
+					object.material.emissive.b = 0;				
+					controller.userData.selected = object;
+				}
+			}
+
+			function onSelectEnd( event ) {
+				const controller = event.target;
+				if ( controller.userData.selected !== undefined ) {
+					const object = controller.userData.selected;
+					object.material.emissive.b = 0;				
+					selectedPlane.visible = false;
+					selectedPlane = object.userData.planes;
+					selectedPlane.visible = true;
+					controller.userData.selected = undefined;
+				}
+			}
+
+
+			function getIntersections( controller ) {
+				tempMatrix.identity().extractRotation( controller.matrixWorld );
+				raycaster.ray.origin.setFromMatrixPosition( controller.matrixWorld );
+				raycaster.ray.direction.set( 0, 0, - 1 ).applyMatrix4( tempMatrix );
+				return raycaster.intersectObjects( jars.children, false );
+			}
+	
+
+			function intersectObjects( controller ) {
+				// Do not highlight when already selected
+				if ( controller.userData.selected !== undefined ) return;
+				const line = controller.getObjectByName( 'line' );
+				const intersections = getIntersections( controller );
+				if ( intersections.length > 0 ) {
+					const intersection = intersections[ 0 ];
+					const object = intersection.object;
+					object.material.emissive.r = 1;
+					intersected.push( object );
+					line.scale.z = intersection.distance;
+				} else {
+					line.scale.z = 5;
+				}
+			}
+
+			function cleanIntersected() {
+				while ( intersected.length ) {
+					const object = intersected.pop();
+					object.material.emissive.r = 0;
+				}
+			}
+```
+Lastly REPLACE
+```
+	function render() {
+		renderer.render( scene, camera );
+	}
+```
+with 
+```
+	function render() {
+		cleanIntersected();
+		intersectObjects( controller2 );
+		intersectObjects( controller1 );
+		renderer.render( scene, camera );
+	}
+```
+Save, check on the localhost and then in VR.
+
 ## Adding Additional Jars
-text
+Pots were made in many different forms by different communities in PNG. There are models and information panels for 32 communities in the folders provided. If you want to experiment with adding them, the following table provides the model name, matching panel, location and colour parameter name to use. -TODO
+
 ## Conclusion and Next Steps
-text
+TODO
 
 
