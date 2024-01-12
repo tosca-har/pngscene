@@ -43,6 +43,7 @@
 		let abelamG, agarabiG, aloaloG, bauG, begilamG, biwariaG, boikinG, collG, demtaG, guhuG;
 		let huonG, ilesalesG, kaiepG, kombioG, lumiG, malukuG, manusG, marikG;  
 		let menoG, motoG, pubineriG, triobriandG, tumleoG, waigeoG; 
+		
 		let selectedPlane;	
 
 		const loader = new GLTFLoader();
@@ -55,6 +56,8 @@
 		let abelamM, agarabiM, aloaloM, bauM, begilamM, biwariaM, boikinM, collingwoodM, demtaM, guhuM;
 		let huonM, ilesalesM, kaiepM, kombioM, lumiM, malukuM, manusM, marikM;
 		let menoM, motoM, pubineriM, triobriandM, tumleoM, waigeoM;
+
+
 
 		init(); 
 		animate();
@@ -78,7 +81,6 @@
 			const dimiriTexture = textureLoader.load( 'textures/Dimiri.jpg' );
 			const louisadeTexture = textureLoader.load( 'textures/Louisade.jpg' );
 			const yabobTexture = textureLoader.load( 'textures/Yabob.jpg' );
-
 
 			const biawariaTexture = textureLoader.load( 'textures/Biawaria.jpg' );
 			const abelamTexture = textureLoader.load( 'textures/Abelam.jpg' );
@@ -387,10 +389,9 @@
 				yabobM.material.color.set(parameters.paddleColor);
 				yabobM.userData.planes = yabobG;
 				jars.add( yabobM);
-				}
+			}
 			loader.load( 'models/gltf/yabob.glb', onLoadYabob, undefined, function ( error ) {console.error( error );} );
 			
-
 			function onLoadLumi( gltf ) {
 				const model = gltf.scene;					
 				lumiM = model.children[0];
@@ -644,6 +645,7 @@
 				jars.add( waigeoM);
 			}
 			loader.load(  'models/gltf/waiGeo.glb', onLoadWaigeo,  undefined, function ( error ) {console.error( error );} );
+
 
 
 			renderer = new THREE.WebGLRenderer( { antialias: true } );
