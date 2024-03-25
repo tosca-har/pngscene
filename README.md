@@ -1,4 +1,4 @@
-# Communicating Material Culture Diversity by Creating 3D Online or Virtual Reality Scenes or Games with Three.js (Part 1) (DRAFT)
+# Communicating Material Culture Diversity by Creating 3D Online or Virtual Reality Scenes or Games with Three.js (DRAFT)
 
 ## Kristine Hardy & Mathieu Leclerc
 
