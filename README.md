@@ -18,7 +18,7 @@ There are several different ways fro creaters to make websites that include mode
 - [Adding Jar Selection](#adding-jar-selection)
 - [Optional- Adding the Option to View in VR](#adding-the-option-to-view-in-vr)
 - [Optional- Adding Jar Selection to VR](#adding-jar-selection-to-vr)
-- [Optional- Designing the Game](#designing-the-game)
+- [Optional- Designing a Game](#designing-a-game)
 - [Optional- Adding Torus](#adding-torus)
 - [Optional- Enabling Jar Movement](#enabling-jar-movement)
 - [Optional- Enabling Jar Movement in VR](#enabling-jar-movement-in-vr)
@@ -205,9 +205,9 @@ Make sure that the command line of your terminal/shell indicates that you are in
 npx serve
 
 this will serve your site, normally to port 3000, but check the message to see what local address is being used. Open a web browser and go to that address (ie http://localhost:3000) and if all is working you will see a black page with 'three.js The Jars of Papua'. 
+![Start](images/black_start.png) 
 
-
-To stop the server use Ctrl C in the terminal. You can restart with 'npx serve', or use the keyboard up arrow to find previous terminal commands. You may need to reload the page in the browser to apply any code changes. 
+To stop the server use Ctrl + C in the terminal. You can restart with 'npx serve', or use the keyboard up arrow to find previous terminal commands. You may need to reload the page in the browser to apply any code changes. 
 
 
 ## Creating the Basic Web Page
@@ -256,7 +256,7 @@ add
 	}
 
 Reload the page after saving the index.html file and check that you have changed the background colour.
-
+![Start](images/start.png) 
 Next we need to add lights and something to see.
 There are several different types of lights. We will add a hemisphere light and a directional light. The hemisphere light has 2 colours and an intensity, while the directional light has one colour and a position. Use the values supplied first and if everything is working later you can experiment with different values. You can add lights directly, like we do with the hemisphere light, or declare them, modify their parameters and then add them, like we do with the directional light.
 
@@ -338,6 +338,7 @@ const parameters = {
 
 ```
 Save and reload in the browser.
+![Spheres](images/spheres.png) 
 
 ## Adding the Information Panels and Map
 Now we will add some planes. We want the information panels to face the viewer, and the default planes do this. However, we want a plane for the map for the jars to sit on, so this plane has to be rotated 90 degrees (- Math.PI /2) around the x axis.
@@ -423,6 +424,7 @@ scene.add( theMap);
 
 ```
 Save and reload. If the panels are black, the images are probably in the wrong place. 
+![Map](images/map.png) 
 
 ## Adding the Jar Models
 
@@ -538,6 +540,8 @@ add:
 		loader.load( 'models/gltf/yabob.glb', onLoadYabob, undefined, function ( error ) {console.error( error );} );
 ```
 Save and reload and you should see 5 models. Number 6 is out of camera view.
+![Jars](images/jars.png)
+
 Note that if you change 'let piecescale = ratio;' to 'let piecescale = ratio*2;' the vessels become bigger, but some will overlap.
 
 You can calculate where to set the positions of the jars by taking into account the map dimensions.
@@ -630,10 +634,9 @@ add:
 		}
 	}	
 ```
+![Click](images/jarclick.png)
 
-
-
-
+The next sections are optional. You can make the scene viewable in VR, turn the website into a puzzle game, add extra jars or do all three.
 
 ## Adding the Option to View in VR
 The reason why the panels are positioned as they are, is that this site is designed to be viewed in VR. WebXR is an application programming interface (API) that translates between the web and hardware used for VR (or AR). Viewing the model in VR allows for easier inspection of the pots, especially if, as implemented in the next part of this series, the pots can be picked up and moved. 
@@ -828,7 +831,7 @@ with
 ```
 Save, check on the localhost and then in VR.
 
-## Designing the Game
+## Designing a Game
 
 Plan and sketch the layout. How will the user know what to do? Is it only based on memory or logic? How is a successful match shown? Change the information panel used.
 
@@ -904,6 +907,7 @@ add
 	selectedTorus = aibomSite; 
 ```
 save and check the torus appear on site reload.
+![Sites](images/torus.png)
 
 in the onClick(event) function change
 ```
@@ -915,7 +919,7 @@ const intersects = raycasterM.intersectObjects( torus.children);
 ```
 save and check the mouse click and panel change now works on torus and not the jars.
 
-in the getIntersections function change
+IF you have implemented VR viewing, in the getIntersections function change
 ```
 return raycaster.intersectObjects( jars.children, false );
 ```
@@ -1152,12 +1156,13 @@ with
 
 ```
 Save and reload, you should see the jars starting above the map and if you reload, they will be in different random positions.
+![Random](images/random.png)
 
 ## Check for Successful Matches
 
 At the end of each jar movement, you want to check if the jar was moved to the correct spot. To do this you need to determine the distance between the jar and either the true location stored in the userData or the matching site (torus). Here we will use the true location, but if movement of the map was ever allowed, it would have to be changed to the site or position relative to the map. You need to set an allowed distance difference that will allow for non-exact placement, but will not be successful if a jar is placed on a torus nearby, here we will use 5 cm.
 
-If the test is successful, there has to be a signal to the user. Here we will change the background colour to a random colour, and make the jar unmoveable (and rotate it to be upright). No signal will be given for an incorrect match.
+If the test is successful, there has to be a signal to the user. Here we will change the background colour to a random colour, and make the jar unmoveable (and rotate it to be upright). No signal will be given for an incorrect match. We will create an additional group called 'unmoveable' and attach any jars that are placed close enough to their torus to that group. Objects can only be attached to one group, so when a model is moved to 'unmoveable' it will no longer be in 'jars' and so the mouse or VR controller will not detect it.
 
 Change
 ```
@@ -1198,7 +1203,10 @@ to
 		}		
     })
 ```
-You can save and test this. Moving in 3D can be difficult, its best done in multiple steps viewing from the top (birds eye view) and then viewing from the side to lower the jar to the map.
+You can save and test this. Moving in 3D can be difficult, its best done in multiple steps viewing from the side to lower the jar to the map and then the top (birds eye view) to place in the right spot, or vice versa.
+![Moving](images/place1.png)
+![Moving](images/place2.png)
+![Moving](images/place3.png)
 
 For the VR controller, replace
 ```
