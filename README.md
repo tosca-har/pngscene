@@ -93,7 +93,7 @@ In the index.html file, copy and paste the following.
 	</body>
 </html>
 ```
-Save the file. This html file is: creating a basic page with a link to the three.js site and a title; importing the three.js library and addons; and linking to a style sheet (which we will create next). The link with the anchor tags (<a></a>) is not needed for Three.js to work and is there because this page was developed from the Three.js example pages, you could change it to link to any site you want.
+Save the file. This html file is: creating a basic page with a link to the three.js site and a title; importing the three.js library and addons; and linking to a style sheet (which we will create next). The link with the anchor tags (&lt;a>&lt;/a>) is not needed for Three.js to work and is there because this page was developed from the Three.js example pages, you could change it to link to any site you want.
 
 In the myscene directory create another new file called 'main.css' and paste in the following. This file came from the examples folder at Three.js, it is a style file.
 ```
