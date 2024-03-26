@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>PNG pottery</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+		<link type="text/css" rel="stylesheet" href="main.css">
+		<script type="importmap">
+            {
+              "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+              }
+            }
+        </script>
+	</head>
+	<body>
+
+		<div id="info">
+			<a href="https://threejs.org" target="_blank" rel="noopener">three.js</a> The Jars of Papua
+		</div>
+
+		<script type="module">
+			import * as THREE from 'three';
+			let container, camera, scene, renderer; // declare the variables
+
+    init(); // this is calling the init function
+	animate(); // this is calling the animate function
+
+    function init() { // within the braces we define the init function
+		container = document.createElement( 'div' );
+		document.body.appendChild( container );
+        scene = new THREE.Scene();
+		scene.background = new THREE.Color( 0xf7d382 );
+				
+		camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 0.1, 10 ); //vertical field of view, aspect, near plane, far plane
+		camera.position.set( 0, 1.6, 3 );
+
+        renderer = new THREE.WebGLRenderer( { antialias: true } );
+		renderer.setPixelRatio( window.devicePixelRatio );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+        container.appendChild( renderer.domElement );
+        window.addEventListener( 'resize', onWindowResize );
+	}
+	function onWindowResize() {
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+		renderer.setSize( window.innerWidth, window.innerHeight );
+	}
+
+	function animate() {
+		renderer.setAnimationLoop( render );
+	}
+
+	function render() {
+		renderer.render( scene, camera );
+	}
+		</script>
+	</body>
+</html>

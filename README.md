@@ -93,9 +93,9 @@ In the index.html file, copy and paste the following.
 	</body>
 </html>
 ```
-Save the file. This html file is: creating a basic page with a link to the three.js site and a title; importing the three.js library and addons; and linking to a style sheet (which we will create next). The link with the anchor tags (&lt;a>&lt;/a>) is not needed for Three.js to work and is there because this page was developed from the Three.js example pages, you could change it to link to any site you want.
+Save the file. This html file is: creating a basic page with a link to the three.js site and a title; importing the three.js library and addons; and linking to a style sheet (which we will create next). The link with the anchor tags (i.e. &lt;a> &lt;/a>) is not needed for Three.js to work and is there because this page was developed from the Three.js example pages, you could remove it or change it to link to any site you want. Anything written within the script tags (i.e. &lt;script> &lt;/script>) will be in the JavaScript language. In JavaScript code, comments are marked by '//' and anything on that line after that will be ignored.
 
-In the myscene directory create another new file called 'main.css' and paste in the following. This file came from the examples folder at Three.js, it is a style file.
+In the myscene directory create another new file called 'main.css' and paste in the following. 
 ```
 body {
 	margin: 0;
@@ -189,7 +189,7 @@ a, button, input, select {
 	padding: 10px;
 }
 ```
-Save the main.css file and then you can close it.
+This file came from the examples folder at Three.js, it is a style file. Save the main.css file and then you can close it.
 
 Save the index.html file.
 
@@ -199,35 +199,33 @@ npx serve
 
 this will serve your site, normally to port 3000, but check the message to see what local address is being used. Open a web browser and go to that address (ie http://localhost:3000) and if all is working you will see a black page with 'three.js The Jars of Papua'. 
 
+
 To stop the server use Ctrl C in the terminal. You can restart with 'npx serve', or use the keyboard up arrow to find previous terminal commands. You may need to reload the page in the browser to apply any code changes. 
 
 
 ## Creating the Basic Web Page
-Every three.js website has a 'scene' which things like, cameras, lights and objects need to be added to. First create a scene with a background colour and a camera. The position of the camera is important, sometimes you can not see your models because the camera is looking away from them. We will use a perspective camera. This background will be peach (0xf7d382).
+Every three.js website has a 'scene' to which cameras, lights and objects need to be added. First create a scene with a background colour and a camera. The position of the camera is important, sometimes you can not see your models because the camera is looking away from them. We will use a perspective camera. This background will be peach (0xf7d382). To specify colours you can use the colour hex code after '0x'.
 
-In the index.html file, **after** the import declare the variables, call and define the init and other necessary functions. 
+In the index.html file, **after** the import declare the variables (with **let**), call and define the init and other necessary functions. 
 
 After:
 ```
-   <script type="module">
     import * as THREE from 'three';
-
 ```		
 add
 
-	let container;
-	let camera, scene, renderer;
+	let container, camera, scene, renderer; // declare the variables
 
-    init(); 
-	animate();
+    init(); // this is calling the init function
+	animate(); // this is calling the animate function
 
-    function init() {
+    function init() { // within the braces we define the init function
 		container = document.createElement( 'div' );
 		document.body.appendChild( container );
         scene = new THREE.Scene();
 		scene.background = new THREE.Color( 0xf7d382 );
 				
-		camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 0.1, 10 );
+		camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 0.1, 10 ); //vertical field of view, aspect, near plane, far plane
 		camera.position.set( 0, 1.6, 3 );
 
         renderer = new THREE.WebGLRenderer( { antialias: true } );
@@ -253,7 +251,7 @@ add
 Reload the page after saving the index.html file and check that you have changed the background colour.
 
 Next we need to add lights and something to see.
-There are several different types of lights. We will add a hemisphere light and a directional light. The hemisphere light has 2 colours and an intensity, while the directional light has one colour and a position. Use the values supplied first and if everything is working later you can experiment with different values.
+There are several different types of lights. We will add a hemisphere light and a directional light. The hemisphere light has 2 colours and an intensity, while the directional light has one colour and a position. Use the values supplied first and if everything is working later you can experiment with different values. You can add lights directly, like we do with the hemisphere light, or declare them, modify their parameters and then add them, like we do with the directional light.
 
 In the function init() and after:
 ```
@@ -272,7 +270,7 @@ For each sphere we also set its position in x, y, z order. Different graphics pr
 
 After:
 ```
-    let camera, scene, renderer;
+    let container, camera, scene, renderer; // declare the variables
 ```
 Add:
 ```
@@ -300,7 +298,7 @@ const parameters = {
 		nabColor: '#209F00' 
     }
     //spheres for key
-	const sphere = new THREE.SphereGeometry( 0.04, 15, 5); 
+	const sphere = new THREE.SphereGeometry( 0.04, 15, 5); //radius, width segments, height segments
 
 	const sphere1 = new THREE.Mesh( sphere,  new THREE.MeshStandardMaterial( {color: parameters.materialColor })); 
 	sphere1.position.set( 0.84, gheight + (psize *.30), -.75); 
@@ -337,7 +335,7 @@ Save and reload in the browser.
 ## Adding the Information Panels and Map
 Now we will add some planes. We want the information panels to face the viewer, and the default planes do this. However, we want a plane for the map for the jars to sit on, so this plane has to be rotated 90 degrees (- Math.PI /2) around the x axis.
 
-We will give the planes image 'textures'. Within the myscene folder, download the 'textures' folder from XXX and place it in the myscene folder. These textures are jpeg and png files and they all have pixels dimensions of 2<sup>n</sup> by 2<sup>n</sup>, eg 4096 × 2048. This helps with efficient rendering. Large image files will take longer to load and may not load at all. The use of images with text (created and exported from any graphics program such as Afinity Designer or Powerpoint) is one way to show text. Here we will make all the information panels for all the jars but hide them until the relevant jar is selected by the user. We will have a variable 'selectedPlane' to track which panel is showing and at the start an instruction panel will be selected.
+We will give the planes image 'textures'. Within the myscene folder, download the 'textures' folder from XXX and place it in the myscene folder. These textures are jpeg and png files and they all have pixels dimensions of 2<sup>n</sup> by 2<sup>n</sup>, eg 4096 × 2048. This helps with efficient rendering. Large image files will take longer to load and may not load at all. The use of images with text (created and exported from any graphics program such as Afinity Designer or Powerpoint) is one way to show text. Here we will make all the information panels for all the jars but hide them until the relevant jar is selected by the user. We will have a variable 'selectedPlane' to track which panel is showing and at the start an instruction panel will be selected. Some panels will be declared within the init function, but we only do this for panels or objects that will never change.
 Textures need to be loaded by a 'TextureLoader'.
 
 After:
@@ -421,7 +419,7 @@ Save and reload. If the panels are black, the images are probably in the wrong p
 
 ## Adding the Jar Models
 
-Three.js can load many different types of models. However, the size is very important and large models will not load. Models are made from meshes, and the less nodes (points) or faces in the mesh the smaller the model size. Reducing the nodes or faces in a model, or retopology can be done in programs such as Blender. In Blender this is relatively easy (if the model is imported as a STL), if the model does not have an image texture. These models were primarily designed in Blender and reduced to under 700KB. They were exported as draco compressed glTF (GL Transmission Format) files.
+Three.js can load many different types of models. However, the size is very important and large models will not load. Models are made from meshes, and the less nodes (points) or faces in the mesh the smaller the model size. Reducing the nodes or faces in a model, or retopology can be done in programs such as Blender. In Blender this is relatively easy, if the model is imported as a STL and if the model does not have an image texture. These models were primarily designed in Blender and reduced to under 700KB. They were exported as draco compressed glTF (GL Transmission Format) files.
 
 Draco-compressed GTLF files are one of the most memory efficient formats to use with three.js. However, they require the importation of additional loaders. Download the 'models' folder from XXX and put it in the myscene folder.
 
@@ -470,7 +468,6 @@ add:
 		adzeraM.userData.planes = adzeraG;
 		jars.add( adzeraM);
 	}
-	loader.load( 'models/gltf/adzera.glb', onLoadAdzera, undefined, function ( error ) { console.error( error );} );
 				
 	function onLoadAibom( gltf ) {
 		const model = gltf.scene;					
@@ -482,7 +479,6 @@ add:
 		aibomM.userData.planes = aibomG;
 		jars.add( aibomM);
 	}
-	loader.load( 'models/gltf/aibom.glb', onLoadAibom, undefined, function ( error ) {console.error( error );} );	
 
 	function onLoadMailu( gltf ) {
 		const model = gltf.scene;					
@@ -494,7 +490,6 @@ add:
 		mailuM.userData.planes = mailuG;
 		jars.add( mailuM);
 	}
-	loader.load( 'models/gltf/mailu.glb', onLoadMailu, undefined, function ( error ) { console.error( error );} );
 
 	function onLoadLouisade( gltf ) {
 		const model = gltf.scene;					
@@ -506,7 +501,6 @@ add:
 		louisadeM.userData.planes = louisadeG;
 		jars.add( louisadeM);
 	}
-	loader.load( 'models/gltf/louisade.glb', onLoadLouisade, undefined, function ( error ) {console.error( error );} );
 
 	function onLoadDimiri( gltf ) {
 		const model = gltf.scene;					
@@ -518,7 +512,6 @@ add:
 		dimiriM.userData.planes = dimiriG;
 		jars.add( dimiriM);
 	}
-	loader.load( 'models/gltf/dimiri.glb', onLoadDimiri, undefined, function ( error ) { console.error( error );} );
 
 	function onLoadYabob( gltf ) {
 		const model = gltf.scene;					
@@ -530,10 +523,17 @@ add:
 		yabobM.userData.planes = yabobG;
 		jars.add( yabobM);
 		}
+		loader.load( 'models/gltf/adzera.glb', onLoadAdzera, undefined, function ( error ) { console.error( error );} );
+		loader.load( 'models/gltf/aibom.glb', onLoadAibom, undefined, function ( error ) {console.error( error );} );	
+		loader.load( 'models/gltf/mailu.glb', onLoadMailu, undefined, function ( error ) { console.error( error );} );
+		loader.load( 'models/gltf/louisade.glb', onLoadLouisade, undefined, function ( error ) {console.error( error );} );
+		loader.load( 'models/gltf/dimiri.glb', onLoadDimiri, undefined, function ( error ) { console.error( error );} );
 		loader.load( 'models/gltf/yabob.glb', onLoadYabob, undefined, function ( error ) {console.error( error );} );
 ```
 Save and reload and you should see 5 models. Number 6 is out of camera view.
-Note that if you change 'let piecescale = ratio;' to 'let piecescale = ratio*2;' the vessels become bigger, but some will overlap. 
+Note that if you change 'let piecescale = ratio;' to 'let piecescale = ratio*2;' the vessels become bigger, but some will overlap.
+
+You can calculate where to set the positions of the jars by taking into account the map dimensions.
 
 ## Adding Camera Controls to Move Around
 We can add mouse controls to allow us to move around the scene. There are different types of controls, we will use 'orbit' controls that allow the user to rotate around the scene, zoom in and out, and if pressing shift, pan up and down or sideways. Alternatives are Arcball or FirstPerson controls, and you can see examples of these on the Three.js site. We need to import any controls. 
@@ -548,12 +548,12 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 ```
 Change
 ```
-	let camera, scene, renderer;
+	let container, camera, scene, renderer; //declare the variables
 ```
 
 to
 ```
-	let camera, scene, renderer, controls;
+	let container, camera, scene, renderer, controls;
 ```
 
 In the init, after:
@@ -574,7 +574,7 @@ Next we want to add an event listener, to be able to select a jar and change the
 
 After;
 ```
-	let camera, scene, renderer, controls;
+	let container, camera, scene, renderer, controls;
 ```
 add
 ```
@@ -600,9 +600,7 @@ Then we have to tell the listener what do do if there is a click in the window. 
 After the resize listener,
 ```
 	function onWindowResize() {
-		camera.aspect = window.innerWidth / window.innerHeight;
-		camera.updateProjectionMatrix();
-		renderer.setSize( window.innerWidth, window.innerHeight );
+		...
 	}
 ```
 add:
@@ -626,6 +624,10 @@ add:
 	}	
 ```
 
+
+
+
+
 ## Adding the Option to View in VR
 The reason why the panels are positioned as they are, is that this site is designed to be viewed in VR. WebXR is an application programming interface (API) that translates between the web and hardware used for VR (or AR). Viewing the model in VR allows for easier inspection of the pots, especially if, as implemented in the next part of this series, the pots can be picked up and moved. 
 
@@ -647,7 +649,7 @@ add
 ```
 After
 ```
-	let camera, scene, renderer, controls;
+	let container, camera, scene, renderer, controls;
 ```
 add
 ```
@@ -738,12 +740,10 @@ add
 
 		raycaster = new THREE.Raycaster(); //for VR
 ```
-after the onWindowResize, ie
+after the onWindowResize,
 ```
 			function onWindowResize() {
-				camera.aspect = window.innerWidth / window.innerHeight;
-				camera.updateProjectionMatrix();
-				renderer.setSize( window.innerWidth, window.innerHeight );
+				...
 			}
 ```
 add
@@ -807,7 +807,7 @@ add
 Lastly REPLACE
 ```
 	function render() {
-		renderer.render( scene, camera );
+		...
 	}
 ```
 with 
