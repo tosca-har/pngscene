@@ -211,7 +211,8 @@ To stop the server use Ctrl + C in the terminal. You can restart with 'npx serve
 
 
 ## Creating the Basic Web Page
-Every three.js website has a 'scene' to which cameras, lights and objects need to be added. First create a scene with a background colour and a camera. The position of the camera is important, sometimes you can not see your models because the camera is looking away from them. We will use a perspective camera. This background will be peach (0xf7d382). To specify colours you can use the colour hex code after '0x'.
+Every three.js website has a 'scene' to which cameras, lights and objects need to be added. 
+First create a scene with a background colour and a camera. The position of the camera is important, sometimes you can not see your models because the camera is looking away from them. We will use a perspective camera. This background will be peach (0xf7d382). To specify colours you can use the colour hex code after '0x'.
 
 In the index.html file, **after** the import declare the variables (with **let**), call and define the init and other necessary functions. 
 
@@ -432,7 +433,9 @@ Three.js can load many different types of models. However, the size is very impo
 
 Draco-compressed GTLF files are one of the most memory efficient formats to use with three.js. However, they require the importation of additional loaders. Download the 'models' folder from XXX and put it in the myscene folder.
 
-The jars will be added to a group (called 'jars') and the group will be added to the scene. This will allow us to specify later, that objects belonging to the jars group can be selected. Each jar will get a userdata property that will hold the information panel that is associated with it, so that when it is selected that panel can be shown. Note that the introduction of the 'piecescale' variable is not strictly necessary as it is set to the same as the ratio, but it can be changed later to be smaller or larger to alter the relative size of the jars to the map.
+The jars will be added to a group (called 'jars') and the group will be added to the scene. This will allow us to specify later, that objects belonging to the jars group can be selected. 
+
+Each jar will get a userdata property that will hold the information panel that is associated with it, so that when it is selected that panel can be shown. Note that the introduction of the 'piecescale' variable is not strictly necessary as it is set to the same as the ratio, but it can be changed later to be smaller or larger to alter the relative size of the jars to the map.
 
 After
 ```
@@ -1163,6 +1166,7 @@ Save and reload, you should see the jars starting above the map and if you reloa
 At the end of each jar movement, you want to check if the jar was moved to the correct spot. To do this you need to determine the distance between the jar and either the true location stored in the userData or the matching site (torus). Here we will use the true location, but if movement of the map was ever allowed, it would have to be changed to the site or position relative to the map. You need to set an allowed distance difference that will allow for non-exact placement, but will not be successful if a jar is placed on a torus nearby, here we will use 5 cm.
 
 If the test is successful, there has to be a signal to the user. Here we will change the background colour to a random colour, and make the jar unmoveable (and rotate it to be upright). No signal will be given for an incorrect match. We will create an additional group called 'unmoveable' and attach any jars that are placed close enough to their torus to that group. Objects can only be attached to one group, so when a model is moved to 'unmoveable' it will no longer be in 'jars' and so the mouse or VR controller will not detect it.
+![Scene](images/scene.jpg)
 
 Change
 ```
