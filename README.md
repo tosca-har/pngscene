@@ -1,8 +1,8 @@
-# Communicating Material Culture Diversity by Creating 3D Online or Virtual Reality Scenes or Games with Three.js (DRAFT)
+# Communicating Material Culture Diversity by Creating 3D Online or Virtual Reality Scenes using Three.js with the option of transforming these into games.(DRAFT)
 
 ## Kristine Hardy & Mathieu Leclerc
 
-### This guide shows how to use the Three.js javascript library to create a website with 3D models to illustrate the diversity of the pottery technologies of communities in the Papua New Guinea area. Selecting a vessel model reveals information on the community and their ceramics. The website is also able to be viewed in Virtual Reality (VR) and can be the basis for a matching puzzle.
+### This guide shows how to use the Three.js javascript library to create a website with 3D models to illustrate the diversity of the pottery technologies of communities in the Papua New Guinea area. Selecting a vessel model reveals information on the community and their ceramics. The website is also able to be viewed in Virtual Reality (VR) and can be the basis for a matching puzzle. The aim of the puzzle is to match the vessel to the community. Selecting a torus shows the information about the pottery and if the vessel is dragged onto the correct torus the background colour will change.
 
 The use of interactive 3D models in websites enables examples of archaeological and historical material culture to be presented more effectively and has the potential to increase community engagement with the research. This ability can be further exploited by using WebXR to make the websites viewable in virtual reality (VR), with larger models with increased manipulability.   
 
@@ -79,7 +79,7 @@ In the index.html file, copy and paste the following.
                 "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
               }
             }
-          </script>
+        </script>
 	</head>
 	<body>
 
@@ -93,7 +93,7 @@ In the index.html file, copy and paste the following.
 	</body>
 </html>
 ```
-Save the file.
+Save the file. This html file is: creating a basic page with a link to the three.js site and a title; importing the three.js library and addons; and linking to a style sheet (which we will create next). The link with the anchor tags (<a></a>) is not needed for Three.js to work and is there because this page was developed from the Three.js example pages, you could change it to link to any site you want.
 
 In the myscene directory create another new file called 'main.css' and paste in the following. This file came from the examples folder at Three.js, it is a style file.
 ```
@@ -199,11 +199,11 @@ npx serve
 
 this will serve your site, normally to port 3000, but check the message to see what local address is being used. Open a web browser and go to that address (ie http://localhost:3000) and if all is working you will see a black page with 'three.js The Jars of Papua'. 
 
-To stop the server use Ctrl C in the terminal. You can restart with npx serve, or use the keyboard up arrows to find previous terminal commands. You may need to reload the page in the browser to apply any code changes. 
+To stop the server use Ctrl C in the terminal. You can restart with 'npx serve', or use the keyboard up arrow to find previous terminal commands. You may need to reload the page in the browser to apply any code changes. 
 
 
 ## Creating the Basic Web Page
-First create a scene with a background colour and a camera. The position of the camera is important, sometimes you can not see your models because the camera is looking away from them. We will use a perspective camera. This background will be peach (0xf7d382).
+Every three.js website has a 'scene' which things like, cameras, lights and objects need to be added to. First create a scene with a background colour and a camera. The position of the camera is important, sometimes you can not see your models because the camera is looking away from them. We will use a perspective camera. This background will be peach (0xf7d382).
 
 In the index.html file, **after** the import declare the variables, call and define the init and other necessary functions. 
 
