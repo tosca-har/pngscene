@@ -4,9 +4,9 @@
 
 ### This guide shows how to use the Three.js javascript library to create a website with 3D models to illustrate the diversity of the pottery technologies of communities in the Papua New Guinea area. Selecting a vessel model reveals information on the community and their ceramics. The website is also able to be viewed in Virtual Reality (VR) and can be the basis for a matching puzzle. The aim of the puzzle is to match the vessel to the community. Selecting a torus shows the information about the pottery and if the vessel is dragged onto the correct torus the background colour will change.
 
-The use of interactive 3D models in websites enables examples of archaeological and historical material culture to be presented more effectively and has the potential to increase community engagement with the research. This ability can be further exploited by using WebXR to make the websites viewable in virtual reality (VR), with larger models with increased manipulability.   
+Web models and digital games can help the dissemination of archaeological information. As opposed to simply writing texts about artifacts, supplying communities with more accurate examples of the archaeological past can be considered a goal of archaeologists (Holtorf, 2005:129). This lesson aims to facilitate the production of engaging digital research outputs by introducing Three.js as a tool to do this. The use of interactive 3D models in websites enables examples of archaeological and historical material culture to be presented more effectively. This ability can be further exploited by using WebXR to make the websites viewable in virtual reality (VR), with models with increased manipulability.   
 
-There are several different ways fro creaters to make websites that include models, including game engines such as Unity and Unreal Engine. However websites can also be made relatively easily using the Three.js Javascript library. This guide provides an example of making such a website.
+There are several different ways for creaters to make websites that include models, including game engines such as Unity and Unreal Engine. However websites can also be made relatively easily using the Three.js Javascript library. This guide provides an example of making such a website.
 
 ## Contents
 - [Lesson Goals](#lesson-goals)
@@ -27,6 +27,7 @@ There are several different ways fro creaters to make websites that include mode
 - [Optional- Update the Instructions](#update-the-instructions)
 - [Optional- Adding Additional Jars](#adding-additional-jars)
 - [Conclusion and Next Steps](#conclusion-and-next-steps)
+- [References](#references)
 
 
 ## Lesson Goals
@@ -1166,7 +1167,6 @@ Save and reload, you should see the jars starting above the map and if you reloa
 At the end of each jar movement, you want to check if the jar was moved to the correct spot. To do this you need to determine the distance between the jar and either the true location stored in the userData or the matching site (torus). Here we will use the true location, but if movement of the map was ever allowed, it would have to be changed to the site or position relative to the map. You need to set an allowed distance difference that will allow for non-exact placement, but will not be successful if a jar is placed on a torus nearby, here we will use 5 cm.
 
 If the test is successful, there has to be a signal to the user. Here we will change the background colour to a random colour, and make the jar unmoveable (and rotate it to be upright). No signal will be given for an incorrect match. We will create an additional group called 'unmoveable' and attach any jars that are placed close enough to their torus to that group. Objects can only be attached to one group, so when a model is moved to 'unmoveable' it will no longer be in 'jars' and so the mouse or VR controller will not detect it.
-![Scene](images/scene.jpg)
 
 Change
 ```
@@ -1256,9 +1256,37 @@ with
 save and check the new instructions appear.
 
 ## Adding Additional Jars
-Pots were made in many different forms by different communities in PNG. There are models and information panels for 32 communities in the folders provided. If you want to experiment with adding them, the following table provides the model name, matching panel, location and colour parameter name to use. -TODO
+Pots were made in many different forms by different communities in PNG. There are models and information panels for 29 communities in the folders provided. If you want to experiment with adding them, the following table provides the model name, matching panel, location and colour parameter name to use.
+
+| Model | Texture | Position | Colour |
+| --- | --- | --- | ---|
+| agarbai.glb | Agarabi.jpg |  0.55 * ratio, desk + 0.01, 0.15 * ratio | xcoilBeatenColor |
+| aloalo.glb | Aloalo.jpg | 0.9* ratio, desk + 0.01, 0.49* ratio | ringTopColor |
+| bau.glb | Bau.jpg | 0.535* ratio, desk + 0.01, 0.04* ratio | coilColor |
+| meno.glb | Meno.jpg |  0.28* ratio, desk + 0.01, -0.01* ratio | coilColor |
+| binadean.glb | Biawaria.jpg | 0.76 * ratio, desk + 0.01, 0.34 * ratio | coilBeatenColor |
+| boiken.glb | Boikin.jpg | 0.37* ratio, desk + 0.01, -0.08* ratio | coilColor |
+| collingwood.glb | Collingwood.jpg | 0.85* ratio, desk + 0.01, 0.4* ratio | wangelaColor |
+| demta.glb | Demta.jpg | 0.13* ratio, desk + 0.01, -0.16* ratio | materialColor |
+| guhu.glb | guhu.jpg | 0.65* ratio, desk + 0.01, 0.23* ratio | coilColor |
+| huon.glb | Huon.jpg | 0.71* ratio, desk + 0.01, 0.13* ratio | paddleColor |
+| ilesales.glb | IleSales.jpg |  -0.34* ratio, desk + 0.01, 0.11* ratio | paddleColor |
+| kaiep.glb | Kaiep.jpg | 0.41* ratio, desk + 0.01, -0.07* ratio | paddleColor |
+| kombio.glb | Kombio.jpg | 0.29* ratio, desk + 0.01, -0.05* ratio | coilColor |
+| kwimbu.glb | Abelam.jpg | 0.33* ratio, desk + 0.01, -0.06* ratio | coilColor |
+| lumi.glb | Lumi.jpg | 0.25* ratio, desk + 0.01, -0.08* ratio | coilColor |
+| maluku.glb | Maluku.jpg | -0.86* ratio, desk + 0.01, -0.08* ratio | paddleAddColor |
+| manus.glb | Manus.jpg | 0.66* ratio, desk + 0.01, -0.2* ratio | paddleColor |
+| marik.glb | Marik.jpg |  0.575* ratio, desk + 0.01, 0.079* ratio | coilColor |
+| moto.glb | Moto.jpg |  0.71* ratio, desk + 0.01, 0.42* ratio | paddleColor |
+| pubineri.glb | Pubineri.jpg |  0.28* ratio, desk + 0.01, -0.01* ratio |  coilColor |
+| triobriand.glb | Triobriand.jpg | 1.01* ratio, desk + 0.01, 0.33* ratio | amphColor |
+| tumleo.glb | Tumleo.jpg | 0.27* ratio, desk + 0.01, -0.12* ratio | paddleColor |
+| waiGeo.glb | Waigeo.jpg |  -0.65* ratio, desk + 0.01, -0.35* ratio | paddleAddColor |
+
 
 ## Conclusion and Next Steps
 TODO
 
-
+## References
+Holtorf, C. 2005. From Stonehenge to Las Vegas. Archaeology as popular culture. Walnut Creek: AltaMira Press.
