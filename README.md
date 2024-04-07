@@ -1256,11 +1256,11 @@ with
 save and check the new instructions appear.
 
 ## Adding Additional Jars
-Pots were made in many different forms by different communities in PNG. There are models and information panels for 29 communities in the folders provided. If you want to experiment with adding them, the following table provides the model name, matching panel, location and colour parameter name to use.
+Pots were made in many different forms by different communities in PNG. There are models and information panels for 29 communities in the folders provided. If you want to experiment with adding them, the following table provides the model name, matching panel, location and colour parameter name to use. Each needs a model name, loading function, panel name and a site/torus (game only). These can be called anything (avoid special characters), but remember to declare them.
 
 | Model | Texture | Position | Colour |
 | --- | --- | --- | ---|
-| agarbai.glb | Agarabi.jpg |  0.55 * ratio, desk + 0.01, 0.15 * ratio | xcoilBeatenColor |
+| agarbai.glb | Agarabi.jpg |  0.55 * ratio, desk + 0.01, 0.15 * ratio | coilBeatenColor |
 | aloalo.glb | Aloalo.jpg | 0.9* ratio, desk + 0.01, 0.49* ratio | ringTopColor |
 | bau.glb | Bau.jpg | 0.535* ratio, desk + 0.01, 0.04* ratio | coilColor |
 | meno.glb | Meno.jpg |  0.28* ratio, desk + 0.01, -0.01* ratio | coilColor |
@@ -1284,7 +1284,7 @@ Pots were made in many different forms by different communities in PNG. There ar
 | tumleo.glb | Tumleo.jpg | 0.27* ratio, desk + 0.01, -0.12* ratio | paddleColor |
 | waiGeo.glb | Waigeo.jpg |  -0.65* ratio, desk + 0.01, -0.35* ratio | paddleAddColor |
 
-
+![All](images/allVessels.png)
 ## Conclusion and Next Steps
 TODO
 
