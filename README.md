@@ -973,7 +973,7 @@ However, you will see that it can be difficult to move jars in certain positions
 
 ## Enabling Jar Movement in VR
 
-To simplify things the right controller will move jars and the left will select sites. Alterate listeners will be created and added to the right controller.
+To simplify things the right controller will move jars and the left will select sites. Alternate listeners will be created and added to the right controller.
 
 After
 ```
