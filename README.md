@@ -2,11 +2,13 @@
 
 ## Kristine Hardy & Mathieu Leclerc
 
-### This guide shows how to use the Three.js javascript library to create a website with 3D models to illustrate the diversity of the pottery technologies of communities in the Papua New Guinea area. Selecting a vessel model reveals information on the community and their ceramics. The website is also able to be viewed in Virtual Reality (VR) and can be the basis for a matching puzzle. The aim of the puzzle is to match the vessel to the community. Selecting a torus shows the information about the pottery and if the vessel is dragged onto the correct torus the background colour will change.
+### This guide shows how to use the Three.js javaScript library to create a website with 3D models to illustrate the diversity of the pottery technologies of communities in the Papua New Guinea area. Selecting a vessel model reveals information on the community and their ceramics. The website is also able to be viewed in Virtual Reality (VR) and can be the basis for a matching puzzle. The aim of the puzzle is to match the vessel to the community. Selecting a torus shows the information about the pottery and if the vessel is dragged onto the correct torus the background colour will change.
 
 Web models and digital games can help the dissemination of archaeological information. As opposed to simply writing texts about artifacts, supplying communities with more accurate examples of the archaeological past can be considered a goal of archaeologists (Holtorf, 2005:129). This lesson aims to facilitate the production of engaging digital research outputs by introducing Three.js as a tool to do this. The use of interactive 3D models in websites enables examples of archaeological and historical material culture to be presented more effectively. This ability can be further exploited by using WebXR to make the websites viewable in virtual reality (VR), with models with increased manipulability.   
 
-There are several different ways for creaters to make websites that include models, including game engines such as Unity and Unreal Engine. However websites can also be made relatively easily using the Three.js Javascript library. This guide provides an example of making such a website.
+There are several different ways for creaters to make websites that include models, such as using the game engines Unity and Unreal Engine. However websites can also be made relatively easily using the Three.js JavaScript library. This guide provides an example of making such a website.
+
+Cross community comparisons of different aspects of material culture, such as pottery, can indicate shared community histories. These aspects include both appearance (form and decoration) and methods of production. This concept is sometimes termed 'cultural evolution' (O'Brien et al. 2008). However, the spread of ideas and local innovations generally occur at a faster rate in material culture than with genetics or linguistics and the transmission of pottery production is argued to have occurred at least partially, independently of demic diffusion in Europe (Dolbunova et al. 2023). Comparisons of pottery across a region such as PNG, or the wider Pacific, reflects shared heritages, community contacts and local innovations. Visualising the pottery forms and their geographic distribution helps illustrate this, especially when additional information, such as the language family, of the community is considered. The extensive ethnographical work of researchers, such as May and Tuckson (2000) and Petrequin and Petrequin (2006) has been essential for such comparisons.
 
 ## Contents
 - [Lesson Goals](#lesson-goals)
@@ -31,7 +33,13 @@ There are several different ways for creaters to make websites that include mode
 
 
 ## Lesson Goals
-text
+The primary goal of this tutorial is to use the Three.js library to create a webpage featuring a 3D scene with selectable components. Scene creation will involve adding lights, cameras, primitive and complex models, and controls. The models will get materials and/or image textures. Concepts such as model groups, scale and visibility, and 3D co-ordinates will be introduced. 
+
+Turning websites with models into puzzles makes them more interesting. An additional goal, is to make the models moveable and postioned at random places. A test is introduced after each time a model is moved, to see if they have been placed in the correct position and successful matches trigger a background colour change.
+
+A further option is to make the site viewable and the models manipulatable in VR, for additional engagement.
+
+
 ## Software Requirements and Installation
 
 - Text editor (Visual Studio Code recommended).
@@ -1289,4 +1297,17 @@ Pots were made in many different forms by different communities in PNG. There ar
 TODO
 
 ## References
+
+Dolbunova, E., Lucquin, A., McLaughlin, T.R., Bondetti, M., Courel, B., Oras, E., Piezonka, H., Robson, H.K., Talbot, H., Adamczak, K., Andreev, K., Asheichyk, V., Charniauski, M., Czekai-Zastawny, A., Ezepenko, I., Grechkina, T., Gunnarssone, A., Gusentsova, T.M., Haskevych, D., Ivanischeva, M., Kabacinski, J., Karmanov, V, Kosorukova, N., Kostyleva, E., Kriiska, A., Kukawka, S., Lozovskaya, O., Mazurkevich, Z., Nedomolkina, N., Piliciauskas, G., Sinitsyna, G., Skorobogatov, A., Smolyaninov, R.V., Surkov, A., Tkachov, O., Tkachova, Ml, Tsybrij, A., Tsybrij, V., Vybornov, A.A., Wawrusiewicz, A., Yudin, A.I., Meadows, J., Heron, C., Craig O.E. 2023. The Transmission of Pottery Technology Among Prehistoric European Hunter-Gatherers. Nature Human Behaviour. 7:171. 
+
+
 Holtorf, C. 2005. From Stonehenge to Las Vegas. Archaeology as popular culture. Walnut Creek: AltaMira Press.
+
+
+May, P., Tuckson, M. 2000. The Traditional Pottery of Papua New Guinea. Crawford House Publishing, Adelaide.
+
+
+O'Brien, M.J., Lyman, R.L., Collard, M., Holdern, C.J., Gray, R.D., Shennan, S.J. 2008. Transmission, Phylogenetics and the Evolution of Cultural Diversity. In: Cultural Transmission and Archaeology: Issues and Case Studies. Society for American Archaeology. Washington.
+
+
+Pétrequin, A.-M., Pétrequin, P. 2006. Objets de Pouvoir en Nouvelle Guinée: Approche Ethnoarchéologique d’un Système de Signes Sociaux: Catalogue de la Donation Anne-Marie et Pierre Pétrequin. Réunion des Musées Nationaux, Paris.
