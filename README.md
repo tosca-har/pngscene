@@ -1,12 +1,13 @@
-# Communicating Material Culture Diversity by Creating 3D Online or Virtual Reality Scenes using Three.js with the option of transforming these into games.(DRAFT)
+# Communicating Material Culture Diversity by Creating 3D Online or Virtual Reality Scenes using Three.js with the option of transforming these into games.
 
 ## Kristine Hardy & Mathieu Leclerc
+The Australian National University, Canberra, Australia
 
 ### This guide shows how to use the Three.js javaScript library to create a website with 3D models to illustrate the diversity of the pottery technologies of communities in the Papua New Guinea area. Selecting a vessel model reveals information on the community and their ceramics. The website is also able to be viewed in Virtual Reality (VR) and can be the basis for a matching puzzle. The aim of the puzzle is to match the vessel to the community. Selecting a torus shows the information about the pottery and if the vessel is dragged onto the correct torus the background colour will change.
 
-Web models and digital games can help the dissemination of archaeological information. As opposed to simply writing texts about artifacts, supplying communities with more accurate examples of the archaeological past can be considered a goal of archaeologists (Holtorf, 2005:129). This lesson aims to facilitate the production of engaging digital research outputs by introducing Three.js as a tool to do this. The use of interactive 3D models in websites enables examples of archaeological and historical material culture to be presented more effectively. This ability can be further exploited by using WebXR to make the websites viewable in virtual reality (VR), with models with increased manipulability.   
+Web models and digital games can help the dissemination of archaeological information. As opposed to simply writing texts about artifacts, supplying communities with more accurate examples of the archaeological past can be considered a goal of archaeologists (Holtorf, 2005). This lesson aims to facilitate the production of engaging digital research outputs by introducing [Three.js](https://threejs.org) as a tool to do this. The use of interactive 3D models in websites enables examples of archaeological and historical material culture to be presented more effectively. This ability can be further exploited by using WebXR to make the websites viewable in virtual reality (VR), with models with increased manipulability.   
 
-There are several different ways for creaters to make websites that include models, such as using the game engines Unity and Unreal Engine. However websites can also be made relatively easily using the Three.js JavaScript library. This guide provides an example of making such a website.
+There are several different ways for creaters to make websites that include models. Many cultural heritage models are hosted on SketchFab (Maschner, 2022), which allows for interactive annotations, and viewing in VR. For more complex interactions with models, game engines such as Godot, Unity and Unreal Engine can be used. However websites can also be made relatively easily using the Three.js JavaScript library. This guide provides an example of making such a website. While this tutorial uses Three.js, many of the concepts are relevant to game engines and 3D modelling software.
 
 Cross community comparisons of different aspects of material culture, such as pottery, can indicate shared community histories. These aspects include both appearance (form and decoration) and methods of production. This concept is sometimes termed 'cultural evolution' (O'Brien et al. 2008). However, the spread of ideas and local innovations generally occur at a faster rate in material culture than with genetics or linguistics and the transmission of pottery production is argued to have occurred at least partially, independently of demic diffusion in Europe (Dolbunova et al. 2023). Comparisons of pottery across a region such as PNG, or the wider Pacific, reflects shared heritages, community contacts and local innovations. Visualising the pottery forms and their geographic distribution helps illustrate this, especially when additional information, such as the language family, of the community is considered. The extensive ethnographical work of researchers, such as May and Tuckson (2000) and Petrequin and Petrequin (2006) has been essential for such comparisons.
 
@@ -230,12 +231,15 @@ After:
     import * as THREE from 'three';
 ```		
 add
-
+```
+	// Variables
 	let container, camera, scene, renderer; // declare the variables
 
+	// Function calls
     init(); // this is calling the init function
 	animate(); // this is calling the animate function
 
+	// Function definitions
     function init() { // within the braces we define the init function
 		container = document.createElement( 'div' );
 		document.body.appendChild( container );
@@ -264,10 +268,11 @@ add
 	function render() {
 		renderer.render( scene, camera );
 	}
-
+```
 Reload the page after saving the index.html file and check that you have changed the background colour.
 ![Start](images/start.png) 
 Next we need to add lights and something to see.
+
 There are several different types of lights. We will add a hemisphere light and a directional light. The hemisphere light has 2 colours and an intensity, while the directional light has one colour and a position. Use the values supplied first and if everything is working later you can experiment with different values. You can add lights directly, like we do with the hemisphere light, or declare them, modify their parameters and then add them, like we do with the directional light.
 
 In the function init() and after:
@@ -283,11 +288,12 @@ add
 ```
 Now we will add some colours and spheres.
 A sphere 'geometry' is made with a size (in this case 0.04 m) and used for 9 different sphere meshes. Each sphere mesh gets a material with a colour. We are using the standard material. The colours are set in the parameters list. In this website they will relate to the method the potters used to make the jars. We want to colour the jars by how they were made. Some communities used coils, while others used moulding and the 'paddle and anvil' method. The spheres we are creating now will form part of the key that lets the viewer know how the pots were made, by having them in a parameter list, we can just change the hex code and the key and pots will all change. Start with these values and alter them later if you want.
-For each sphere we also set its position in x, y, z order. Different graphics programs use different co-ordinate systems. In Three.js x is left (-) and right (+), y is down (-) and up (+) and z is far (-) and near (+).
+
+For each sphere we also set its position in x, y, z order. Different graphics programs and game engines use [different co-ordinate systems](https://twitter.com/freyaholmer/status/1325556229410861056). In Three.js x is left (-) and right (+), y is down (-) and up (+) and z is far (-) and near (+), i.e. it is a Y up, right-handed system.
 
 After:
 ```
-    let container, camera, scene, renderer; // declare the variables
+    // Variables
 ```
 Add:
 ```
@@ -358,7 +364,7 @@ Textures need to be loaded by a 'TextureLoader'.
 
 After:
 ```
-    let psize = 1.0; // panel dimensions
+    // Variables
 ```
 Add:
 ```
@@ -457,7 +463,7 @@ import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 ```
 After
 ```
-let selectedPlane;
+	// Variables
 ```
 add
 ```
@@ -597,12 +603,11 @@ Next we want to add an event listener, to be able to select a jar and change the
 
 After;
 ```
-	let container, camera, scene, renderer, controls;
+	// Variables
 ```
 add
 ```
 	let raycasterM, pointer, selectedTorus; // for mouse controls
-
 ```
 
 Within the init function definition
@@ -671,7 +676,7 @@ add
 ```
 After
 ```
-	let container, camera, scene, renderer, controls;
+	// Variables
 ```
 add
 ```
@@ -716,7 +721,7 @@ The controllers can be used to select a jar and change the information panel. Ev
 
 after
 ```
-	let raycasterM, pointer, selectedTorus;
+	// Variables
 ```
 add
 ```
@@ -1294,14 +1299,23 @@ Pots were made in many different forms by different communities in PNG. There ar
 
 ![All](images/allVessels.png)
 ## Conclusion and Next Steps
-TODO
+
+This has been an introduction to using Three.js and the basic concepts in creating 3D scenes. The official [Three.js](https://threejs.org) website shows how much more complex pages can be created, with additions such as animations and sound. The [Three.js](https://threejs.org) site also contains example code that could be used for extending the puzzle created here, with sound effects for correct matches. Many sites, especially those with large models, feature loading bars, that give feedback to the user while the models load. Another possible extension, primarily for VR, would be to enable the map to be moved. While this allows everything to be scaled larger, it is important to consider usability issues, and the possibility of inducing user motion sickness.  
+
+There are many ways cultural heritage models can be used interactively: vessels can be refitted (Hardy, 2023), site contexts could be toggled on and off, or objects could be virtually analysed (for p-XRF etc). Providing research data in such a format, has challenges, but also has the possibility for making findings more accessible and interesting to non-academic audiences.
 
 ## References
 
 Dolbunova, E., Lucquin, A., McLaughlin, T.R., Bondetti, M., Courel, B., Oras, E., Piezonka, H., Robson, H.K., Talbot, H., Adamczak, K., Andreev, K., Asheichyk, V., Charniauski, M., Czekai-Zastawny, A., Ezepenko, I., Grechkina, T., Gunnarssone, A., Gusentsova, T.M., Haskevych, D., Ivanischeva, M., Kabacinski, J., Karmanov, V, Kosorukova, N., Kostyleva, E., Kriiska, A., Kukawka, S., Lozovskaya, O., Mazurkevich, Z., Nedomolkina, N., Piliciauskas, G., Sinitsyna, G., Skorobogatov, A., Smolyaninov, R.V., Surkov, A., Tkachov, O., Tkachova, Ml, Tsybrij, A., Tsybrij, V., Vybornov, A.A., Wawrusiewicz, A., Yudin, A.I., Meadows, J., Heron, C., Craig O.E. 2023. The Transmission of Pottery Technology Among Prehistoric European Hunter-Gatherers. Nature Human Behaviour. 7:171. 
 
 
+Hardy, K. 2023. The creation of 'Uvira's Pot', a virtual reality puzzle to promote engagement with archaeological research. Conference: Digital Humanities 2023. Collaboration as Opportunity (DH2023) At: Graz, Austria.
+
+
 Holtorf, C. 2005. From Stonehenge to Las Vegas. Archaeology as popular culture. Walnut Creek: AltaMira Press.
+
+
+Maschner, H. July 2022 (https://sketchfab.com/blogs/community/cultural-heritage-spotlight-global-digital-heritage/?utm_source=website&utm_campaign=newsfeed)
 
 
 May, P., Tuckson, M. 2000. The Traditional Pottery of Papua New Guinea. Crawford House Publishing, Adelaide.
