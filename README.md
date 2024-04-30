@@ -14,6 +14,7 @@ Cross community comparisons of different aspects of material culture, such as po
 ## Contents
 - [Lesson Goals](#lesson-goals)
 - [Software Requirements and Installation](#software-requirements-and-installation)
+- [Ethics](#ethics)
 - [Creating the Basic Web Page](#creating-the-basic-web-page)
 - [Adding the Information Panels and Map](#adding-the-information-panels-and-map)
 - [Adding the Jar Models](#adding-the-jar-models)
@@ -150,7 +151,7 @@ button {
 	-ms-user-select: none;
 	user-select: none;
 	pointer-events: none;
-	z-index: 1; /* TODO Solve this in HTML */
+	z-index: 1; 
 }
 
 a, button, input, select {
@@ -158,7 +159,7 @@ a, button, input, select {
 }
 
 .lil-gui {
-	z-index: 2 !important; /* TODO Solve this in HTML */
+	z-index: 2 !important; 
 }
 
 @media all and ( max-width: 640px ) {
@@ -219,12 +220,17 @@ this will serve your site, normally to port 3000, but check the message to see w
 
 To stop the server use Ctrl + C in the terminal. You can restart with 'npx serve', or use the keyboard up arrow to find previous terminal commands. You may need to reload the page in the browser to apply any code changes. 
 
+## Ethics
+
+Its important to reference the source of images and models used in a page. Here this will be done on an information panels in the site. The use of cultural heritage models, especially from communities that have been exploited and have had objects taken without consent, needs to be carefully considered. Laws and guidelines differ from country to country. Ideally consent from the maker community, or their descendants should be obtained for modelling of cultural objects. 
+
+The models used in this project, were created with Computer Aided Design (CAD) by the authors (who are not of PNG heritage) and are intended to be symbolic rather than realistic. How different communities feel about their cultural objects being represented on websites, and in VR is an area that would benefit from further research. It is also important to reflect on whether an scenes or especially puzzles, are contributing to a colonial approach. For example it might be better to have objects returned to their place of origin, than a puzzle that features them being stolen or 'collected'.
 
 ## Creating the Basic Web Page
 Every three.js website has a 'scene' to which cameras, lights and objects need to be added. 
 First create a scene with a background colour and a camera. The position of the camera is important, sometimes you can not see your models because the camera is looking away from them. We will use a perspective camera. This background will be peach (0xf7d382). To specify colours you can use the colour hex code after '0x'.
 
-In the index.html file, **after** the import declare the variables (with **let**), call and define the init and other necessary functions. 
+In the index.html file, **after** the import declare the variables (with **let**), call and define the init and other necessary functions. Variables are generally declared outside function definitions, but sometimes will be declared within a function definition if the variable is only referred to within the function definition. 
 
 After:
 ```
@@ -359,7 +365,8 @@ Save and reload in the browser.
 ## Adding the Information Panels and Map
 Now we will add some planes. We want the information panels to face the viewer, and the default planes do this. However, we want a plane for the map for the jars to sit on, so this plane has to be rotated 90 degrees (- Math.PI /2) around the x axis.
 
-We will give the planes image 'textures'. Within the myscene folder, download the 'textures' folder from XXX and place it in the myscene folder. These textures are jpeg and png files and they all have pixels dimensions of 2<sup>n</sup> by 2<sup>n</sup>, eg 4096 × 2048. This helps with efficient rendering. Large image files will take longer to load and may not load at all. The use of images with text (created and exported from any graphics program such as Afinity Designer or Powerpoint) is one way to show text. Here we will make all the information panels for all the jars but hide them until the relevant jar is selected by the user. We will have a variable 'selectedPlane' to track which panel is showing and at the start an instruction panel will be selected. Some panels will be declared within the init function, but we only do this for panels or objects that will never change.
+We will give the planes image 'textures'. Within the myscene folder, download the 'textures' folder and place it in the myscene folder. These textures are jpeg and png files and they all have pixels dimensions of 2<sup>n</sup> by 2<sup>n</sup>, eg 4096 × 2048. This helps with efficient rendering. Large image files will take longer to load and may not load at all. The use of images with text (created and exported from any graphics program such as Afinity Designer or Powerpoint) is one way to show text. Here we will create all the information panels for all the jars but hide them (by making .visbile = false) until the relevant jar is selected by the user. We will have a variable 'selectedPlane' to track which panel is showing and at the start an instruction panel will be selected. Some panels will be declared within the init function, but we only do this for panels or objects that will never change.
+
 Textures need to be loaded by a 'TextureLoader'.
 
 After:
@@ -446,7 +453,9 @@ Save and reload. If the panels are black, the images are probably in the wrong p
 
 Three.js can load many different types of models. However, the size is very important and large models will not load. Models are made from meshes, and the less nodes (points) or faces in the mesh the smaller the model size. Reducing the nodes or faces in a model, or retopology can be done in programs such as Blender. In Blender this is relatively easy, if the model is imported as a STL and if the model does not have an image texture. These models were primarily designed in Blender and reduced to under 700KB. They were exported as draco compressed glTF (GL Transmission Format) files.
 
-Draco-compressed GTLF files are one of the most memory efficient formats to use with three.js. However, they require the importation of additional loaders. Download the 'models' folder from XXX and put it in the myscene folder.
+Draco-compressed GTLF files are one of the most memory efficient formats to use with Three.js. However, they require the importation of additional loaders. It is also possible to have multiple models in one GTLF file and to separate them once imported.
+
+Download the 'models' folder and put it in the myscene folder.
 
 The jars will be added to a group (called 'jars') and the group will be added to the scene. This will allow us to specify later, that objects belonging to the jars group can be selected. 
 
@@ -660,7 +669,7 @@ The reason why the panels are positioned as they are, is that this site is desig
 
 Testing the site on a VR unit such as the Quest is more difficult. There is an emulator for chrome (https://chrome.google.com/webstore/detail/immersive-web-emulator/cgffilbpcibhmcfbgggfhfolhkfbhmik)- but it only works to a limited extent. If your computer runs on the same network as your VR unit, you can use the network address given when you serve with npx. Another solution is to use a Github page. As Github can take some time to rebuild/update, you can change the title text, so that you know that you are looking at the updated code. Github may limit the number of updates you can do in an hour. Follow the instructions for uploading the code to a Github page and the note the resulting address where a browser will be able to access the page. Remember to upload the models, textures, and style file as well.
 
-The units in Three.js are metres and so the map will take up 3 by 1.5 m of space. If you want to use a much bigger map, you would have to consider making the map moveable, or implementing a 'teleport' type of movement. Note example three.js code for teleportation is available.
+The units in Three.js are metres and so the map will take up 3 by 1.5 m of space. If you want to use a much bigger map, you would have to consider making the map moveable, or implementing a 'teleport' type of movement. Note example Three.js code for teleportation is available.
 
 When WebXR is added, a button will be created at the buttom of the website that will enable VR users to enter the immersive version. We will also add models for the controllers.
 
@@ -775,7 +784,6 @@ after the onWindowResize,
 ```
 add
 ```
-
 			function onSelectStart( event ) {
 				const controller = event.target;
 				const intersections = getIntersections( controller );
@@ -806,7 +814,6 @@ add
 				raycaster.ray.direction.set( 0, 0, - 1 ).applyMatrix4( tempMatrix );
 				return raycaster.intersectObjects( jars.children, false );
 			}
-	
 
 			function intersectObjects( controller ) {
 				// Do not highlight when already selected
@@ -850,7 +857,9 @@ Save, check on the localhost and then in VR.
 
 ## Designing a Game
 
-Plan and sketch the layout. How will the user know what to do? Is it only based on memory or logic? How is a successful match shown? Change the information panel used.
+When designing a game or puzzle, plan and sketch the layout. Consider, how will the user know what to do, and how a successful action is indicated. Also consider, if the puzzle is based on memory or logic? Consider consulting guides such as Schell (2015).
+
+To transform the scene into a puzzle the information panel used needs to be altered, as it is the main source of user information. Another source of guidance to the user in the VR version, is to have items that are targetted for selection change colour when pointed at. 
 
 The goal for the user of this game is to start with the jars off the map and the PNG communities marked by selectable tokens. When the communities are selected (mouse click, or VR left controller) the information panel will provide the information on the pots made by that community. Information on how the technique used to make the pot can be used to work out which of the jars may be a match, as the jars are coloured by the technique and a key is provided. The decoration technique may also serve as a guide. The user can move the jars (mouse or VR right controller). If they place the matching jar on the community marker then the jar becomes unmoveable and the background colour changes. 
 
@@ -1325,3 +1334,5 @@ O'Brien, M.J., Lyman, R.L., Collard, M., Holdern, C.J., Gray, R.D., Shennan, S.J
 
 
 Pétrequin, A.-M., Pétrequin, P. 2006. Objets de Pouvoir en Nouvelle Guinée: Approche Ethnoarchéologique d’un Système de Signes Sociaux: Catalogue de la Donation Anne-Marie et Pierre Pétrequin. Réunion des Musées Nationaux, Paris.
+
+Schell, J. 2015. The Art of Game Design: A Book of Lenses. CRC Press. FL.
