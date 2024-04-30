@@ -26,7 +26,7 @@
 			import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 			import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 			import { DragControls } from 'three/addons/controls/DragControls.js';
-
+			// Variables
 			let container, camera, scene, renderer, controls, dragControls;
 			let raycasterM, pointer, selectedTorus; // for mouse controls
 			let ratio = 2;
@@ -36,12 +36,12 @@
 			let gallery, adzeraG, aibomG, mailuG, dimiriG, louisadeG, yabobG;
 			let selectedPlane;	
 			const loader = new GLTFLoader();
-	const dracoLoader = new DRACOLoader();
-	dracoLoader.setDecoderPath( 'https://unpkg.com/three@0.160.0/examples/jsm/libs/draco/' );
-	loader.setDRACOLoader( dracoLoader );
+			const dracoLoader = new DRACOLoader();
+			dracoLoader.setDecoderPath( 'https://unpkg.com/three@0.160.0/examples/jsm/libs/draco/' );
+			loader.setDRACOLoader( dracoLoader );
 
-	let jars, torus, trueposition, unmoveable;
-	let adzeraM, aibomM, mailuM, louisadeM, dimiriM, yabobM;		
+			let jars, torus, trueposition, unmoveable;
+			let adzeraM, aibomM, mailuM, louisadeM, dimiriM, yabobM;		
 
     init(); // this is calling the init function
 	animate(); // this is calling the animate function
